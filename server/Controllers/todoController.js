@@ -10,9 +10,11 @@ const Controller = {
                 priority:req.priority,
                 created_by: req.created_by,
                 deadline:req.deadline
+            } )
+            if(result){
+                res.status(201).send('the task is added')
             }
-            
-            )
+           
         }catch(e){
             console.log(e.mesage)
         }
@@ -21,6 +23,10 @@ const Controller = {
         try{
            const result = await Tache.find(); 
            console.log(result)
+           if(result.length == 0){
+            res.status(404).send('there is no task')
+           }
+           res.status(200).send(result)
         }catch(e){
             console.log(e.message)
         } 
@@ -31,6 +37,10 @@ const Controller = {
         try{
            const result = await Tache.find(req.params.id); 
            console.log(result)
+           if(result.length == 0){
+            res.status(404).send('Task not found')
+           }
+           res.status(200).send(result)
         }catch(e){
             console.log(e.message)
         } 
