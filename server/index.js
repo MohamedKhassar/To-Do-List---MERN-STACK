@@ -4,5 +4,5 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 require("./Connection");
 app.listen(PORT, () => {
-  console.log(`app listining at : http://localhost:${PORT}/`);
+  console.log(`app listening at : http://localhost:${PORT}/`);
 });

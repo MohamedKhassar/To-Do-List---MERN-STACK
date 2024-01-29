@@ -26,8 +26,8 @@ const TodoSchema = new mongoose.Schema({
     required: true,
   },
   deadline: {
-    type: Boolean,
-    default: false,
+    type: Date,
+    required: true,
   },
 });
 
