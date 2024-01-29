@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const { isDate } = require("validator");
 const TodoSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: [true, "please enter a title"],
   },
   description: {
     type: String,
@@ -15,7 +16,7 @@ const TodoSchema = new mongoose.Schema({
   priority: {
     type: String,
     enum: ["important", "not important"],
-    require: true,
+    default: "not important",
   },
   delete_at: {
     type: Date,
@@ -23,11 +24,12 @@ const TodoSchema = new mongoose.Schema({
   },
   created_by: {
     type: String,
-    required: true,
+    required: [true, "please enter your name"],
   },
   deadline: {
     type: Date,
-    required: true,
+    required: [true, "please enter a deadline"],
+    validate: [isDate, "please enter a valid date"],
   },
 });
 

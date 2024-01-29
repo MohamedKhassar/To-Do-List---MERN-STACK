@@ -4,6 +4,7 @@ const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT;
 
+app.use(express.json());
 require("./Connection");
 app.use(router);
 app.listen(PORT, () => {
