@@ -1,10 +1,15 @@
 {
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:backend": "cd server && npm start",
     "start:frontend": "cd client && npm run dev",
-    "start:backend": "cd server && npm start"
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
   },
-  "dependencies": {
-    "concurrently": "^8.2.2"
+  "devDependencies": {
+    "concurrently": "^6.0.0"
   }
 }
