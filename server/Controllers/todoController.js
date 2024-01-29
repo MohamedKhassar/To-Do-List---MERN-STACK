@@ -63,6 +63,7 @@ const Controller = {
       await TodoModel.findByIdAndUpdate(req.params.id, {
         delete_at: new Date().toISOString(),
       });
+      res.json("deleted");
     } catch (err) {
       console.log(err);
     }
