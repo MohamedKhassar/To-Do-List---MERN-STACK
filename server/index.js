@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT;
 require("./Connection");
-app.listen(port, () => {
-  console.log(`app listining at : http://localhost:${port}/`);
+app.listen(PORT, () => {
+  console.log(`app listining at : http://localhost:${PORT}/`);
 });
