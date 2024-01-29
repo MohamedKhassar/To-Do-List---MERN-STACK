@@ -3,12 +3,12 @@ const Controller = {
   postTask: async (req, res) => {
     try {
       const result = await TodoModel.create({
-        title: req.title,
-        description: req.description,
-        status: req.status,
-        priority: req.priority,
-        created_by: req.created_by,
-        deadline: req.deadline,
+        title: req.body.title,
+        description: req.body.description,
+        status: req.body.status,
+        priority: req.body.priority,
+        created_by: req.body.created_by,
+        deadline: req.body.deadline,
       });
     } catch (err) {
       console.log(err.message);
@@ -16,7 +16,7 @@ const Controller = {
   },
   getAllTasks: async (req, res) => {
     try {
-      const result = await TodoModel.find();
+      const result = await TodoModel.find({delete_at: null});
       console.log(result);
     } catch (err) {
       console.log(err.message);
