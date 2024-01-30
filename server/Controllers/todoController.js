@@ -38,15 +38,24 @@ const Controller = {
   getAllTasks: async (req, res) => {
     try {
       const result = await TodoModel.find({ delete_at: null });
-      res.json(result);
+      if (result.length == 0) {
+        res.status(404).json("Not Found");
+      } else {
+        res.json(result);
+      }
     } catch (err) {
       console.log(err.message);
     }
   },
   getTaskByID: async (req, res) => {
+    const { id } = req.params.id;
     try {
-      const result = await TodoModel.find(req.params.id);
-      console.log(result);
+      const result = await TodoModel.findById(id);
+      if (!result) {
+        res.status(404).json("Not Found");
+      } else {
+        res.json(result);
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -55,7 +64,8 @@ const Controller = {
     try {
       await TodoModel.findByIdAndUpdate(req.params.id, req.body);
     } catch (err) {
-      console.log(err.message);
+      const error = handelErrors(err);
+      res.json(error);
     }
   },
   deleteTask: async (req, res) => {
