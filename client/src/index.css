@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+    font-family: "Exo";
+    src: url("./assets/fonts/Exo-ExtraBold.ttf");
+}
