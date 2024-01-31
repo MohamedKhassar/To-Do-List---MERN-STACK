@@ -1,7 +1,7 @@
 import Tasks from "./components/pages/Tasks"
 import Task from "./components/pages/Task"
 import UpdateTask from "./components/pages/UpdateTask"
-import { Route, Routes, redirect, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 export default function App() {
   const location = useLocation();
