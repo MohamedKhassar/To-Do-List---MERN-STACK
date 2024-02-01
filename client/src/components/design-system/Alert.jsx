@@ -3,13 +3,13 @@ import { cn } from '../../utils/cn';
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
 
-function Alert({ children, type = "error", className }) {
+function Alert({ children, type = "error", className, duration = 5000 }) {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setVisible(false);
-        }, 5000); // Remove the alert after 5 seconds (adjust as needed)
+        }, duration); // Remove the alert after 5 seconds (adjust as needed)
 
         return () => clearTimeout(timer);
     }, []);
@@ -17,7 +17,7 @@ function Alert({ children, type = "error", className }) {
     return (
         visible && (
             <div className={cn(
-                "rounded-md p-4 flex justify-between items-center absolute right-3 top-4",
+                "capitalize rounded-md p-4 flex gap-x-10 justify-between items-center absolute right-3 top-4",
                 type === 'error' ? 'bg-red-100 text-red-900' :
                     type === 'success' ? 'bg-green-100 text-green-900' :
                         type === 'warning' ? 'bg-yellow-100 text-yellow-900' :
@@ -25,7 +25,7 @@ function Alert({ children, type = "error", className }) {
                 className
             )}>
                 {children}
-                <IoMdCloseCircleOutline />
+                <IoMdCloseCircleOutline size={20} onClick={() => setVisible(false)} />
             </div>
         )
     );
