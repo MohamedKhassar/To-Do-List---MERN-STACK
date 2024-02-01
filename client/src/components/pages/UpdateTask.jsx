@@ -11,7 +11,6 @@ const UpdateTask = ()=>{
 const nav = useNavigate();
 const {id} = useParams();
 const [data, setData] = useState({
-    name: "",
     created_by: "",
     title: "",
     description: "",
@@ -22,7 +21,7 @@ const [data, setData] = useState({
 useEffect(()=>{
     const getData = async()=>{
     try{
-    const result = await axios.get(`http://localhost:8080/api/task/${id}`);
+    const result = await axios.get(`http://localhost:8080/api/tasks/${id}`);
     setData(result.data);
     }catch(e){
     console.log(e.message)
@@ -36,7 +35,7 @@ getData()
 
 const UpdateData = async()=>{
     try{
-    const result = await axios.put(`http://localhost:8080/api/task/${id}`, data);
+    const result = await axios.put(`http://localhost:8080/api/tasks/${id}`, data);
     console.log(result);
     }catch(e){
     console.log(e.message)
@@ -67,7 +66,7 @@ return(
                                     <label htmlFor="Name" className="dark:text-[#bb86fc]">Your Name : </label>
                                     <Input type="text" placeholder='Enter Your Name' id="Name" value={data.created_by} onChange={(e)=>{
                                         setData({...data,
-                                             name: e.target.value})
+                                             created_by: e.target.value})
                                     }} />
                                 </div>
                                 <div className="flex flex-col gap-y-2">
