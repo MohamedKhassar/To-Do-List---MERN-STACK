@@ -15,17 +15,14 @@ const Controller = {
       res.status(201).json("created");
     } catch (err) {
       const error = handelErrors(err);
-      res.json(error);
+      throw Error(error);
     }
   },
   getAllTasks: async (req, res) => {
     try {
       const result = await TodoModel.find({ delete_at: null });
-      if (result.length == 0) {
-        res.status(404).json("Not Found");
-      } else {
-        res.json(result);
-      }
+
+      res.json(result);
     } catch (err) {
       console.log(err.message);
     }
@@ -48,7 +45,7 @@ const Controller = {
       await TodoModel.findByIdAndUpdate(req.params.id, req.body);
     } catch (err) {
       const error = handelErrors(err);
-      res.json(error);
+      throw Error(error);
     }
   },
   deleteTask: async (req, res) => {
