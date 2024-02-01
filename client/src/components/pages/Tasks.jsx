@@ -1,12 +1,11 @@
 import { IoMdHand } from "react-icons/io";
-import { MdEdit } from "react-icons/md";
-import { FaTrash } from "react-icons/fa";
-import { FaCheck } from "react-icons/fa";
 import AddForm from "../AddForm";
+import { RxReset } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import axios from "axios"
 import TaskCards from "../design-system/TaskCard";
 import Alert from "../design-system/Alert";
+import Select from "../design-system/Select";
 const Tasks = () => {
   const [tasks, setTasks] = useState();
   const [error, setError] = useState();
@@ -46,7 +45,27 @@ const Tasks = () => {
     <div className="m-14">
       <h1 className="dark:text-[#bb86fc] select-none text-black text-3xl font-[Exo] text-center capitalize flex justify-center gap-x-4">welcome to <span className="bg-gradient-to-r from-violet-400 to-violet-500 text-transparent bg-clip-text underline decoration-wavy dark:decoration-white decoration-black underline-offset-8"> MasterTask</span> <IoMdHand fill="orange" /></h1>
       <AddForm />
-      <div className="grid justify-center mt-20">
+      <div className="mt-20 flex justify-center gap-x-10 items-end">
+        <div className="flex flex-col gap-y-4">
+          <h1 className="capitalize dark:text-[#BB86FC]">status</h1>
+          <Select>
+            <option value="to do">to do</option>
+            <option value="doing">doing</option>
+            <option value="done">done</option>
+          </Select>
+        </div>
+        <div className="flex flex-col gap-y-4">
+          <h1 className="capitalize dark:text-[#BB86FC]">priority</h1>
+          <Select>
+            <option value="important">important</option>
+            <option value="not important">not important</option>
+          </Select>
+        </div>
+        <div className="capitalize rounded-full p-2 text-black text-sm bg-[#BB86FC] dark:text-white">
+          <RxReset size={22} />
+        </div>
+      </div>
+      <div className="grid gap-y-8 justify-center mt-20">
         {tasks ? tasks.map(task =>
           <TaskCards doneTask={() => doneTask(task._id)} softDelete={() => softDelete(task._id)} key={task._id} title={task.title} priority={task.priority} status={task.status} />
         ) : <Alert duration={10000}>{error}</Alert>}
