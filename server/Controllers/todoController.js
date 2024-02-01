@@ -4,18 +4,12 @@ const TodoModel = require("../models/TodoModel");
 const Controller = {
   postTask: async (req, res) => {
     try {
-      await TodoModel.create({
-        title: req.body.title,
-        description: req.body.description,
-        status: req.body.status,
-        priority: req.body.priority,
-        created_by: req.body.created_by,
-        deadline: req.body.deadline,
-      });
+      await TodoModel.create(req.body);
       res.status(201).json("created");
     } catch (err) {
       const error = handelErrors(err);
-      throw Error(error);
+      res.status(400).json(error);
+      console.log(error);
     }
   },
   getAllTasks: async (req, res) => {
