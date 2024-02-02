@@ -40,11 +40,11 @@ const AddForm = () => {
     }, [isDisplay])
     const addTask = async () => {
         try {
-            console.log('Data to be sent:', data);
+            //console.log('Data to be sent:', data);
             const result = await axios.post('http://localhost:8080/api/tasks', data)
-            
+             setError(false);
             console.log('Task added successfully:', result.data, data);
-            setError(false);
+           setData({})
 
         } catch (e) {
             setError(true);
@@ -52,7 +52,7 @@ const AddForm = () => {
            console.log('error:', e.response.data)
         }
     }
-   /* const issuccess =()=>{
+  /* const issuccess =()=>{
         addTask();
         let alertComponent = null;
 
@@ -144,7 +144,7 @@ const AddForm = () => {
                                         <option value="important">important</option>
                                         <option value="not important">not important</option>
                                     </Select>
-                                    <p className="text-red-500 hidden" >{alert.priority}</p>
+                                    <p className={`text-red-500 ${error ? 'block' : 'hidden'}`} >{alert.priority}</p>
                                 </div>
                             </div>
                             <div className="grid gap-x-4 grid-cols-1 w-full">
@@ -160,7 +160,9 @@ const AddForm = () => {
                                 <p className={`text-red-500 ${error ? 'block' : 'hidden'}`} >{alert.deadline}</p>
                             </div>
                             <div className='flex gap-7'>
-                                <Button variant="success" onClick={()=>{addTask}}>Save</Button>
+                                <Button variant="success" onClick={addTask}>Save
+                                <Alert type={error?"error":"success"}>Task is not added successfully</Alert>                            
+                                </Button>
                                 <Button variant="danger" onClick={() => setIsDisplay(false)}>Close</Button>
                             </div>
 
@@ -169,6 +171,7 @@ const AddForm = () => {
 
                 }
             </AnimatePresence>
+            
         </>
     )
 }
