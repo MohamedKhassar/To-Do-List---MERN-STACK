@@ -11,9 +11,9 @@ const AddForm = () => {
         created_by: "",
         title: "",
         description: "",
-        status: "",
-        priority: "",
-        deadline: new Date().toISOString().split('T')[0]
+        status: "to do",
+        priority: "not important",
+        deadline: ""
     })
     const [error, setError] = useState(false)
     const [alert, setAlert] = useState({
@@ -30,6 +30,7 @@ const AddForm = () => {
     const handelClick = (e) => {
         if (divRef.current && !divRef.current.contains(e.target)) {
             setIsDisplay(false)
+            setError(false)
         }
     }
     useEffect(() => {
@@ -42,28 +43,41 @@ const AddForm = () => {
         try {
             //console.log('Data to be sent:', data);
             const result = await axios.post('http://localhost:8080/api/tasks', data)
-             setError(false);
+
             console.log('Task added successfully:', result.data, data);
-           setData({})
+            setData({
+                created_by: "",
+                title: "",
+                description: "",
+                status: "to do",
+                priority: "not important",
+                deadline: ""
+            })
+            setError(false)
+            setIsDisplay(false)
 
         } catch (e) {
             setError(true);
             setAlert(e.response.data);
-           console.log('error:', e.response.data)
+            console.log('error:', e.response.data)
         }
     }
-  /* const issuccess =()=>{
-        addTask();
-        let alertComponent = null;
-
-        if (!error) {
-            alertComponent = <Alert type="success">Task added successfully</Alert>;
-        } else {
-            alertComponent = <Alert type="error">Task is not added successfully</Alert>;
-        }
-    
-        return alertComponent;
-    }*/
+    /* const issuccess =()=>{
+          addTask();
+          let alertComponent = null;
+  
+          if (!error) {
+              alertComponent = <Alert type="success">Task added successfully</Alert>;
+          } else {
+              alertComponent = <Alert type="error">Task is not added successfully</Alert>;
+          }
+      
+          return alertComponent;
+      }*/
+    const closeForm = () => {
+        setIsDisplay(false)
+        setError(false)
+    }
     return (
         <>
             <div className="flex justify-center items-center">
@@ -86,7 +100,7 @@ const AddForm = () => {
                             <div className="grid grid-cols-2 gap-x-4 ">
                                 <div className="flex flex-col gap-y-2">
                                     <label htmlFor="Name" className="dark:text-[#bb86fc]">Your Name : </label>
-                                    <Input type="text" placeholder='Enter Your Name' id="Name" onChange={(e) => {
+                                    <Input value={data.created_by} type="text" placeholder='Enter Your Name' id="Name" onChange={(e) => {
                                         setData({
                                             ...data,
                                             created_by: e.target.value
@@ -96,7 +110,7 @@ const AddForm = () => {
                                 </div>
                                 <div className="flex flex-col gap-y-2 ">
                                     <label htmlFor="Title" className="dark:text-[#bb86fc]">Title : </label>
-                                    <Input type="text" placeholder='Task' id="Title" onChange={(e) => {
+                                    <Input value={data.title} type="text" placeholder='Task' id="Title" onChange={(e) => {
                                         setData({
                                             ...data,
                                             title: e.target.value
@@ -109,13 +123,14 @@ const AddForm = () => {
                             <div className="grid gap-x-4 grid-cols-1 w-full">
                                 <div className="flex flex-col gap-y-2 w-full">
                                     <label htmlFor="des" className="dark:text-[#bb86fc]">Description : </label>
-                                    <textarea type="date" className="p-1 border-black border-2 rounded-md max-h-20 outline-none" placeholder="" id="des" onChange={(e) => {
+                                    <textarea value={data.description
+                                    } type="date" className="p-1 border-black border-2 rounded-md max-h-20 outline-none" placeholder="" id="des" onChange={(e) => {
                                         setData({
                                             ...data,
                                             description: e.target.value
                                         })
                                     }}></textarea>
-                                    
+
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-x-4">
@@ -127,7 +142,7 @@ const AddForm = () => {
                                             status: e.target.value
                                         })
                                     }}>
-                                        <option value="to do">to do</option>
+                                        <option selected value="to do">to do</option>
                                         <option value="doing">doing</option>
                                         <option value="done">done</option>
                                     </Select>
@@ -141,8 +156,8 @@ const AddForm = () => {
                                             priority: e.target.value
                                         })
                                     }}>
+                                        <option selected value="not important">not important</option>
                                         <option value="important">important</option>
-                                        <option value="not important">not important</option>
                                     </Select>
                                     <p className={`text-red-500 ${error ? 'block' : 'hidden'}`} >{alert.priority}</p>
                                 </div>
@@ -150,7 +165,7 @@ const AddForm = () => {
                             <div className="grid gap-x-4 grid-cols-1 w-full">
                                 <div className="flex flex-col gap-y-2 w-full">
                                     <label htmlFor="Deadline" className="dark:text-[#bb86fc]">Deadline : </label>
-                                    <Input type="date" className="dark:text-black" id="Deadline" onChange={(e) => {
+                                    <Input value={data.deadline} type="date" className="dark:text-black" id="Deadline" onChange={(e) => {
                                         setData({
                                             ...data,
                                             deadline: e.target.value
@@ -161,9 +176,9 @@ const AddForm = () => {
                             </div>
                             <div className='flex gap-7'>
                                 <Button variant="success" onClick={addTask}>Save
-                                <Alert type={error?"error":"success"}>Task is not added successfully</Alert>                            
+                                    {error && <Alert >Task is not added successfully</Alert>}
                                 </Button>
-                                <Button variant="danger" onClick={() => setIsDisplay(false)}>Close</Button>
+                                <Button variant="danger" onClick={closeForm}>Close</Button>
                             </div>
 
                         </motion.div>
@@ -171,7 +186,7 @@ const AddForm = () => {
 
                 }
             </AnimatePresence>
-            
+
         </>
     )
 }

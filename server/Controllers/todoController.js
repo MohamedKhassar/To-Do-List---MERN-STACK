@@ -22,7 +22,7 @@ const Controller = {
     }
   },
   getTaskByID: async (req, res) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     try {
       const result = await TodoModel.findById(id);
       if (!result) {
@@ -36,8 +36,25 @@ const Controller = {
   },
   getTaskByStatus: async (req, res) => {
     const { status } = req.query;
+    console.log(status);
     try {
       const result = await TodoModel.find({ delete_at: null, status: status });
+      if (!result) {
+        res.status(404).json("Not Found");
+      } else {
+        res.json(result);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  },
+  getTaskByPriority: async (req, res) => {
+    const { priority } = req.query;
+    try {
+      const result = await TodoModel.find({
+        delete_at: null,
+        priority: priority,
+      });
       if (!result) {
         res.status(404).json("Not Found");
       } else {
