@@ -34,6 +34,19 @@ const Controller = {
       console.log(err.message);
     }
   },
+  getTaskByStatus: async (req, res) => {
+    const { status } = req.query;
+    try {
+      const result = await TodoModel.find({ delete_at: null, status: status });
+      if (!result) {
+        res.status(404).json("Not Found");
+      } else {
+        res.json(result);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  },
   updateTask: async (req, res) => {
     try {
       await TodoModel.findByIdAndUpdate(req.params.id, req.body);

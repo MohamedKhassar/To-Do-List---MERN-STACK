@@ -21,7 +21,7 @@ const TaskCards = ({ title, status, priority, className, doneTask, softDelete })
                 <div className="grid gap-y-6">
                     <h1>priority</h1>
                     <p className={cn("capitalize rounded-3xl py-1 px-6  text-black text-sm",
-                        priority == "not important" ? "bg-yellow-600" : "bg-green-600",
+                        priority == "not important" ? "bg-yellow-600" : "bg-red-600",
                         className
                     )}>{priority}</p>
                 </div>
