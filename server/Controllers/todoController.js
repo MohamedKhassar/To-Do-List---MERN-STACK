@@ -69,7 +69,7 @@ const Controller = {
       await TodoModel.findByIdAndUpdate(req.params.id, req.body);
     } catch (err) {
       const error = handelErrors(err);
-      throw Error(error);
+      res.status.json(error);
     }
   },
   deleteTask: async (req, res) => {
