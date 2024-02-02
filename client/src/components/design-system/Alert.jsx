@@ -3,13 +3,13 @@ import { cn } from '../../utils/cn';
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
 
-function Alert({ children, type = "error", className, duration = 5000 }) {
+function Alert({ children, type = "error", className}) {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setVisible(false);
-        }, duration); // Remove the alert after 5 seconds (adjust as needed)
+        }, 5000); // Remove the alert after 5 seconds (adjust as needed)
 
         return () => clearTimeout(timer);
     }, []);

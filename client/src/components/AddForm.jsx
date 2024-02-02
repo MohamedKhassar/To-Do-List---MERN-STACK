@@ -5,6 +5,7 @@ import Input from "./design-system/Input";
 import Select from "./design-system/Select";
 import { IoAdd } from "react-icons/io5";
 import axios from 'axios';
+import Alert from "./design-system/Alert";
 const AddForm = () => {
     const [data, setData] = useState({
         created_by: "",
@@ -14,7 +15,15 @@ const AddForm = () => {
         priority: "",
         deadline: new Date().toISOString().split('T')[0]
     })
-    const [error, setError] = useState()
+    const [error, setError] = useState(false)
+    const [alert, setAlert] = useState({
+        created_by: "",
+        title: "",
+        description: "",
+        status: "",
+        priority: "",
+        deadline: new Date().toISOString().split('T')[0]
+    })
     const [isDisplay, setIsDisplay] = useState(false)
     const divRef = useRef(null)
 
@@ -31,12 +40,30 @@ const AddForm = () => {
     }, [isDisplay])
     const addTask = async () => {
         try {
+            console.log('Data to be sent:', data);
             const result = await axios.post('http://localhost:8080/api/tasks', data)
+            
             console.log('Task added successfully:', result.data, data);
+            setError(false);
+
         } catch (e) {
-            console.log('error:', e.response.data.title)
+            setError(true);
+            setAlert(e.response.data);
+           console.log('error:', e.response.data)
         }
     }
+   /* const issuccess =()=>{
+        addTask();
+        let alertComponent = null;
+
+        if (!error) {
+            alertComponent = <Alert type="success">Task added successfully</Alert>;
+        } else {
+            alertComponent = <Alert type="error">Task is not added successfully</Alert>;
+        }
+    
+        return alertComponent;
+    }*/
     return (
         <>
             <div className="flex justify-center items-center">
@@ -56,7 +83,7 @@ const AddForm = () => {
                             transition={{ duration: "0.5" }}
                         >
                             <h1 className='text-2xl font-bold dark:text-[#BB86FC] uppercase'>add new task</h1>
-                            <div className="grid grid-cols-2 gap-x-4">
+                            <div className="grid grid-cols-2 gap-x-4 ">
                                 <div className="flex flex-col gap-y-2">
                                     <label htmlFor="Name" className="dark:text-[#bb86fc]">Your Name : </label>
                                     <Input type="text" placeholder='Enter Your Name' id="Name" onChange={(e) => {
@@ -65,8 +92,9 @@ const AddForm = () => {
                                             created_by: e.target.value
                                         })
                                     }} />
+                                    <p className={`text-red-500 ${error ? 'block' : 'hidden'}`} >{alert.created_by}</p>
                                 </div>
-                                <div className="flex flex-col gap-y-2">
+                                <div className="flex flex-col gap-y-2 ">
                                     <label htmlFor="Title" className="dark:text-[#bb86fc]">Title : </label>
                                     <Input type="text" placeholder='Task' id="Title" onChange={(e) => {
                                         setData({
@@ -74,6 +102,8 @@ const AddForm = () => {
                                             title: e.target.value
                                         })
                                     }} />
+                                    <p className={`text-red-500 ${error ? 'block' : 'hidden'}`} >{alert.title}</p>
+
                                 </div>
                             </div>
                             <div className="grid gap-x-4 grid-cols-1 w-full">
@@ -85,6 +115,7 @@ const AddForm = () => {
                                             description: e.target.value
                                         })
                                     }}></textarea>
+                                    
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-x-4">
@@ -100,6 +131,7 @@ const AddForm = () => {
                                         <option value="doing">doing</option>
                                         <option value="done">done</option>
                                     </Select>
+                                    <p className={`text-red-500 ${error ? 'block' : 'hidden'}`} >{alert.status}</p>
                                 </div>
                                 <div className="flex flex-col gap-y-2">
                                     <label htmlFor="Priority" className="dark:text-[#bb86fc]">Priority : </label>
@@ -112,6 +144,7 @@ const AddForm = () => {
                                         <option value="important">important</option>
                                         <option value="not important">not important</option>
                                     </Select>
+                                    <p className="text-red-500 hidden" >{alert.priority}</p>
                                 </div>
                             </div>
                             <div className="grid gap-x-4 grid-cols-1 w-full">
@@ -124,9 +157,10 @@ const AddForm = () => {
                                         })
                                     }} />
                                 </div>
+                                <p className={`text-red-500 ${error ? 'block' : 'hidden'}`} >{alert.deadline}</p>
                             </div>
                             <div className='flex gap-7'>
-                                <Button variant="success" onClick={() => { addTask() }}>Save</Button>
+                                <Button variant="success" onClick={()=>{addTask}}>Save</Button>
                                 <Button variant="danger" onClick={() => setIsDisplay(false)}>Close</Button>
                             </div>
 
