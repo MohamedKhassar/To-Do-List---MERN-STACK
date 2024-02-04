@@ -7,6 +7,7 @@ import TaskCards from "../design-system/TaskCard";
 import Alert from "../design-system/Alert";
 import Select from "../design-system/Select";
 import Button from "../design-system/Button";
+import { Link } from "react-router-dom";
 const Tasks = () => {
   const [tasks, setTasks] = useState();
   const [error, setError] = useState();
@@ -102,11 +103,14 @@ const Tasks = () => {
           <RxReset size={22} />
         </div>
       </div>
+        
       <div className="grid gap-y-8 justify-center mt-20">
         {tasks ? tasks.map(task =>
+        <Link to={`/task/${task._id}`}>
           <TaskCards id={task._id} doneTask={() => doneTask(task._id)} softDelete={() => softDelete(task._id)} key={task._id} title={task.title} priority={task.priority} status={task.status} />
-        ) : <Alert duration={10000}>{error}</Alert>}
+        </Link>) : <Alert duration={10000}>{error}</Alert>}
       </div>
+      
     </div>
   )
 }
