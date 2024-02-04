@@ -31,10 +31,10 @@ const TaskCards = ({ id, title, status, priority, className, doneTask, softDelet
                         "grid gap-x-6",
                         status === "done" ? "grid-cols-2" : "grid-cols-3"
                     )}>
-                        {status !== "done" && <div className="text-green-500 hover:scale-125 duration-500" onClick={doneTask}><FaCheck size={23} />
+                        {status !== "done" && <div className="cursor-pointer text-green-500 hover:scale-125 duration-500" onClick={doneTask}><FaCheck size={23} />
                         </div>}
-                        <Link to={`/update-task/${id}`} ><MdEdit size={23} className="dark:text-[#BB86FC] hover:scale-125 duration-500" /></Link>
-                        <FaTrash size={23} className="text-red-600 hover:scale-125 duration-500" onClick={softDelete} />
+                        <Link to={`/update-task/${id}`} className="cursor-pointer"><MdEdit size={23} className="dark:text-[#BB86FC] hover:scale-125 duration-500" /></Link>
+                        <FaTrash size={23} className="text-red-600 hover:scale-125 duration-500 cursor-pointer" onClick={softDelete} />
                     </div>
                 </div>
             </div>

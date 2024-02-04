@@ -5,6 +5,7 @@ const router = Router();
 router.get("/api/tasks/status", Controller.getTaskByStatus);
 router.get("/api/tasks/priority", Controller.getTaskByPriority);
 router.get("/api/tasks", Controller.getAllTasks);
+router.get("/api/tasks/trash", Controller.getAllTrash);
 router.get("/api/tasks/:id", Controller.getTaskByID);
 router.post("/api/tasks", Controller.postTask);
 router.put("/api/tasks/:id", Controller.updateTask);

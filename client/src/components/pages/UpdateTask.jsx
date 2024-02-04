@@ -7,23 +7,16 @@ import axios from 'axios'
 import Button from '../design-system/Button';
 import Select from '../design-system/Select';
 import Input from '../design-system/Input';
+import useFetch from '../../hooks/useFetch';
 const UpdateTask = () => {
     const nav = useNavigate();
     const { id } = useParams();
-    const [data, setData] = useState({});
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const result = await axios.get(`http://localhost:8080/api/tasks/${id}`);
-                setData(result.data);
-            } catch (e) {
-                console.log(e.message)
-            }
+    const [url, setUrl] = useState();
+    const [method, setMethod] = useState("GET");
+    const [task] = useFetch(`http://localhost:8080/api/tasks/${id}`)
+    const [data, setData] = useState(task);
 
-        }
-        getData()
-    }, []
-    )
+
 
 
 
@@ -41,7 +34,7 @@ const UpdateTask = () => {
     return (
         <>
 
-            {data && <AnimatePresence>
+            {task && <AnimatePresence>
                 {/* update POPUP */}
 
                 <div className='fixed top-0 left-0 right-0 bottom-0 bg-[#00000099] flex items-center justify-center'  >
