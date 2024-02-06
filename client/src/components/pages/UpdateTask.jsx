@@ -11,30 +11,22 @@ import useFetch from '../../hooks/useFetch';
 const UpdateTask = () => {
     const nav = useNavigate();
     const { id } = useParams();
-    const [url, setUrl] = useState();
+    const [url, setUrl] = useState(`http://localhost:8080/api/tasks/${id}`);
     const [method, setMethod] = useState("GET");
-    const [task] = useFetch(`http://localhost:8080/api/tasks/${id}`)
-    const [data, setData] = useState(task);
-
-
-
-
+    const [newData, setNewData] = useState();
+    const [data, loading, setData] = useFetch(url, method, newData)
 
     const UpdateData = async () => {
-        try {
-            const result = await axios.put(`http://localhost:8080/api/tasks/${id}`, data).then(
-                nav("/tasks")
 
-            );
-        } catch (e) {
-            console.log(e.message)
-        }
+        setUrl(`http://localhost:8080/api/tasks/${id}`)
+        setMethod("PUT")
+        setNewData(data)
     }
 
     return (
         <>
 
-            {task && <AnimatePresence>
+            {data && <AnimatePresence>
                 {/* update POPUP */}
 
                 <div className='fixed top-0 left-0 right-0 bottom-0 bg-[#00000099] flex items-center justify-center'  >
