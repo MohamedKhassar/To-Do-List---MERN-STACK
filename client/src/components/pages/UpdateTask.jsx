@@ -7,35 +7,20 @@ import axios from 'axios'
 import Button from '../design-system/Button';
 import Select from '../design-system/Select';
 import Input from '../design-system/Input';
+import useFetch from '../../hooks/useFetch';
 const UpdateTask = () => {
     const nav = useNavigate();
     const { id } = useParams();
-    const [data, setData] = useState({});
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const result = await axios.get(`http://localhost:8080/api/tasks/${id}`);
-                setData(result.data);
-            } catch (e) {
-                console.log(e.message)
-            }
-
-        }
-        getData()
-    }, []
-    )
-
-
+    const [url, setUrl] = useState(`http://localhost:8080/api/tasks/${id}`);
+    const [method, setMethod] = useState("GET");
+    const [newData, setNewData] = useState();
+    const [data, loading, setData] = useFetch(url, method, newData)
 
     const UpdateData = async () => {
-        try {
-            const result = await axios.put(`http://localhost:8080/api/tasks/${id}`, data).then(
-                nav("/tasks")
 
-            );
-        } catch (e) {
-            console.log(e.message)
-        }
+        setUrl(`http://localhost:8080/api/tasks/${id}`)
+        setMethod("PUT")
+        setNewData(data)
     }
 
     return (

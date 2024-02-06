@@ -21,6 +21,14 @@ const Controller = {
       console.log(err.message);
     }
   },
+  getAllTrash: async (req, res) => {
+    try {
+      const result = await TodoModel.find({ delete_at: { $ne: null } });
+      res.json(result);
+    } catch (err) {
+      console.log(err.message);
+    }
+  },
   getTaskByID: async (req, res) => {
     const { id } = req.params;
     try {
@@ -36,7 +44,6 @@ const Controller = {
   },
   getTaskByStatus: async (req, res) => {
     const { status } = req.query;
-    console.log(status);
     try {
       const result = await TodoModel.find({ delete_at: null, status: status });
       if (!result) {
@@ -69,14 +76,12 @@ const Controller = {
       await TodoModel.findByIdAndUpdate(req.params.id, req.body);
     } catch (err) {
       const error = handelErrors(err);
-      res.status.json(error);
+      res.status(404).json(error);
     }
   },
   deleteTask: async (req, res) => {
     try {
-      await TodoModel.findByIdAndUpdate(req.params.id, {
-        delete_at: new Date().toISOString(),
-      });
+      await TodoModel.findByIdAndUpdate(req.params.id, req.body);
       res.json("deleted");
     } catch (err) {
       console.log(err);

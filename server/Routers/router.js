@@ -6,53 +6,35 @@ const swaggerUi = require("swagger-ui-express");
 
 // Swagger options
 const swaggerOptions = {
-    definition: {
-      openapi: "3.0.0",
-      info: {
-        title: "Todo API",
-        version: "1.0.0",
-        description: "API documentation for a Todo application",
-      },
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Todo API",
+      version: "1.0.0",
+      description: "API documentation for a Todo application",
     },
-    apis: ["./**/*.js"],
-  };
-  
-  const swaggerSpec = swaggerJsdoc(swaggerOptions);
-  router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
- 
-  router.get("/api/tasks/status", Controller.getTaskByStatus);
-  router.get("/api/tasks/priority", Controller.getTaskByPriority);
-  
-  /**
-   * @swagger
-   * /api/tasks:
-   *   get:
-   *     summary: Get all tasks
-   *     responses:
-   *       200:
-   *         description: Successful response
-   *       404:
-   *         description: Not Found
-   */
-router.get("/api/tasks", Controller.getAllTasks);
+  },
+  apis: ["./**/*.js"],
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+router.get("/api/tasks/trash", Controller.getAllTrash);
+router.get("/api/tasks/status", Controller.getTaskByStatus);
+router.get("/api/tasks/priority", Controller.getTaskByPriority);
 
 /**
  * @swagger
- * /api/tasks/{id}:
+ * /api/tasks:
  *   get:
- *     summary: Get a task by ID
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
+ *     summary: Get all tasks
  *     responses:
  *       200:
  *         description: Successful response
  *       404:
  *         description: Not Found
  */
+router.get("/api/tasks", Controller.getAllTasks);
 router.get("/api/tasks/:id", Controller.getTaskByID);
 
 /**

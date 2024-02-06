@@ -6,7 +6,12 @@ import Select from "./design-system/Select";
 import { IoAdd } from "react-icons/io5";
 import axios from 'axios';
 import Alert from "./design-system/Alert";
+import useFetch from "../hooks/useFetch";
 const AddForm = () => {
+    const [url, setUrl] = useState();
+    const [method, setMethod] = useState("GET");
+    const [newData, setNewData] = useState();
+    useFetch(url, method, newData)
     const [data, setData] = useState({
         created_by: "",
         title: "",
@@ -42,9 +47,9 @@ const AddForm = () => {
     const addTask = async () => {
         try {
             //console.log('Data to be sent:', data);
-            const result = await axios.post('http://localhost:8080/api/tasks', data)
-
-            console.log('Task added successfully:', result.data, data);
+            setUrl("http://localhost:8080/api/tasks")
+            setMethod("POST")
+            setNewData(data)
             setData({
                 created_by: "",
                 title: "",
