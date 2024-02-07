@@ -7,10 +7,13 @@
   "scripts": {
     "start:backend": "cd server && npm start",
     "start:frontend": "cd client && npm run dev",
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "test": "jest"
   },
   "devDependencies": {
-    "concurrently": "^6.0.0"
+    "concurrently": "^6.0.0",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
   },
   "dependencies": {
     "axios": "^1.6.7",
