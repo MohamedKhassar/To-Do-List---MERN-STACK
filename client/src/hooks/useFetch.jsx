@@ -26,12 +26,9 @@ const useFetch = (url = "http://localhost:8080/api/tasks", method = "GET", newDa
             await axios(url, {
                 method,
                 data: newData
-            })
-            if (method == "PUT") {
-                navigate(-1)
-            } else {
+            }).then(
                 navigate(0)
-            }
+            )
 
         } catch (error) {
             console.log(error)

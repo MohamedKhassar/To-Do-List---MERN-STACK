@@ -8,8 +8,6 @@ import Select from "../design-system/Select";
 import Button from "../design-system/Button";
 import useFetch from "../../hooks/useFetch";
 import { FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
 const Tasks = () => {
   const [url, setUrl] = useState("http://localhost:8080/api/tasks");
   const [method, setMethod] = useState();
@@ -108,18 +106,24 @@ const Tasks = () => {
               {query.priority && <Button variant="primary" className="w-1/2" onClick={filterDataByPriority}>filter</Button>}
             </div>
           </div>
-          <div onClick={getData} className="capitalize rounded-full p-2 text-black text-sm bg-[#BB86FC] dark:text-white">
-            <RxReset size={22} />
+          <div className="flex gap-x-8">
+            <div onClick={trash} className="capitalize rounded-full p-2 text-red-500 text-sm bg-[#BB86FC] dark:text-white">
+              <FaTrash size={22} />
+            </div>
+            <div onClick={reset} className="capitalize rounded-full p-2 text-black text-sm bg-[#BB86FC] dark:text-white">
+              <RxReset size={22} />
+            </div>
           </div>
         </div>
         <div className="grid gap-y-8 justify-center mt-20">
-          {tasks ? tasks.map(task =>
+          {!loading && tasks ? tasks.map(task =>
             <TaskCards id={task._id} doneTask={() => doneTask(task._id)} softDelete={() => softDelete(task._id)} key={task._id} title={task.title} priority={task.priority} status={task.status} />
-          ) : <Alert duration={10000}>{error}</Alert>}
+          ) : <img src={loader} alt="" />}
         </div>
 
       </div>
-      )
+    </div>
+  )
 }
 
-      export default Tasks
+export default Tasks
