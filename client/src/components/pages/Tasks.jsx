@@ -8,6 +8,7 @@ import Select from "../design-system/Select";
 import Button from "../design-system/Button";
 import useFetch from "../../hooks/useFetch";
 import { FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const Tasks = () => {
   const [url, setUrl] = useState("http://localhost:8080/api/tasks");
   const [method, setMethod] = useState();
@@ -117,7 +118,9 @@ const Tasks = () => {
         </div>
         <div className="grid gap-y-8 justify-center mt-20">
           {!loading && tasks ? tasks.map(task =>
-            <TaskCards id={task._id} doneTask={() => doneTask(task._id)} softDelete={() => softDelete(task._id)} key={task._id} title={task.title} priority={task.priority} status={task.status} />
+            <Link to={`/task/${task._id}`} key={task._id}>
+              <TaskCards id={task._id} doneTask={() => doneTask(task._id)} softDelete={() => softDelete(task._id)} key={task._id} title={task.title} priority={task.priority} status={task.status} />
+            </Link>
           ) : <img src={loader} alt="" />}
         </div>
 

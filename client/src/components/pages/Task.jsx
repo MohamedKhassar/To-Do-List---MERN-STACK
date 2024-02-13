@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../design-system/Button";
 import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
 const Task = () => {
     const nav = useNavigate();
-    const {id} = useParams();
+    const { id } = useParams();
     const [data, setData] = useState({});
     useEffect(() => {
         const getData = async () => {
@@ -22,7 +22,7 @@ const Task = () => {
     )
     return (
         <>
-  {data && <AnimatePresence>
+            {data && <AnimatePresence>
                 {/* update POPUP */}
 
                 <div className='fixed top-0 left-0 right-0 bottom-0 bg-[#00000099] flex items-center justify-center'  >
@@ -33,15 +33,15 @@ const Task = () => {
                         exit={{ opacity: 0, y: -50 }}
                         transition={{ duration: "0.5" }}
                     >
-                        <h1 className='text-2xl font-bold dark:text-[#BB86FC] uppercase'>update the task</h1>
+                        <h1 className='text-2xl font-bold dark:text-[#BB86FC] uppercase'>{data.title}</h1>
                         <div className="grid grid-cols-2 gap-x-4">
                             <div className="flex flex-col gap-y-2">
                                 <label htmlFor="Name" className="dark:text-[#bb86fc]">Your Name : </label>
-                                <div name="Name">{data.created_by}</div> 
+                                <div name="Name">{data.created_by}</div>
                             </div>
                             <div className="flex flex-col gap-y-2">
                                 <label htmlFor="Title" className="dark:text-[#bb86fc]">Title : </label>
-                                <div name="Title">{data.title}</div> 
+                                <div name="Title">{data.title}</div>
                             </div>
                         </div>
                         <div className="grid gap-x-4 grid-cols-1 w-full">
@@ -52,11 +52,11 @@ const Task = () => {
                         <div className="grid grid-cols-2 gap-x-4">
                             <div className="flex flex-col gap-y-2 ">
                                 <label htmlFor="status" className="dark:text-[#bb86fc]">Status : </label>
-                                <div name="status">{data.status}</div> 
+                                <div name="status">{data.status}</div>
                             </div>
                             <div className="flex flex-col gap-y-2">
                                 <label htmlFor="Priority" className="dark:text-[#bb86fc]">Priority : </label>
-                                <div name="Priority">{data.priority}</div>  
+                                <div name="Priority">{data.priority}</div>
                             </div>
                         </div>
                         <div className="grid gap-x-4 grid-cols-1 w-full">
@@ -74,7 +74,7 @@ const Task = () => {
 
             </AnimatePresence>}
         </>
-        
+
     )
 }
 
