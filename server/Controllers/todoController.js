@@ -74,14 +74,17 @@ const Controller = {
   updateTask: async (req, res) => {
     try {
       await TodoModel.findByIdAndUpdate(req.params.id, req.body);
+      res.json({ message: "updated" });
     } catch (err) {
       const error = handelErrors(err);
-      res.status(404).json(error);
+      res.status.json(error);
     }
   },
   deleteTask: async (req, res) => {
     try {
-      await TodoModel.findByIdAndUpdate(req.params.id, req.body);
+      await TodoModel.findByIdAndUpdate(req.params.id, {
+        delete_at: new Date().toISOString(),
+      });
       res.json("deleted");
     } catch (err) {
       console.log(err);
