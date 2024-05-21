@@ -62,7 +62,7 @@ const Task = () => {
                         <div className="grid gap-x-4 grid-cols-1 w-full">
                             <div className="flex flex-col gap-y-2 w-full">
                                 <label htmlFor="Deadline" className="dark:text-[#bb86fc]">Deadline : </label>
-                                <div name="Deadline">{data.deadline}</div> </div>
+                                <div name="Deadline">{new Date(data.deadline).toDateString()}</div> </div>
                         </div>
                         <div className='flex gap-7'>
                             <Button variant="danger" onClick={() => nav('/tasks')}>Close</Button>

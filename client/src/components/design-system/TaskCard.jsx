@@ -2,10 +2,10 @@ import { FaCheck, FaTrash } from "react-icons/fa"
 import { cn } from "../../utils/cn"
 import { MdEdit } from "react-icons/md"
 import { Link } from "react-router-dom"
-const TaskCards = ({ id, title, status, priority, className, doneTask, softDelete }) => {
+const TaskCards = ({ id, title, status, priority, className, doneTask, softDelete, showTask }) => {
     return (
         <div className="hover:scale-[1.01] duration-500 flex justify-between items-end gap-x-60 dark:text-[#BB86FC] capitalize border rounded-lg p-5 shadow-md dark:shadow-[#BB86FC] text-center dark:border-[#BB86FC] border-black shadow-gray-700" >
-            <div className="grid gap-y-6">
+            <div className="grid gap-y-6 cursor-pointer" onClick={showTask}>
                 <h1 className="text-start">Title</h1>
                 <h1 className={cn("capitalize", status == "done" && "line-through decoration-solid")}>{title}</h1>
             </div>

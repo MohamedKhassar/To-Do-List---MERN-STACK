@@ -8,19 +8,21 @@ import Select from "../design-system/Select";
 import Button from "../design-system/Button";
 import useFetch from "../../hooks/useFetch";
 import { FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Tasks = () => {
   const [url, setUrl] = useState("http://localhost:8080/api/tasks");
+  const navigate = useNavigate()
   const [method, setMethod] = useState();
   const [newData, setNewData] = useState();
   const [tasks, loading] = useFetch(url, method, newData);
-  const [error, setError] = useState();
   const [query, setQuery] = useState({
     status: "",
     priority: "",
   });
 
-
+  const showTask = (id) => {
+    navigate(`/task/${id}`)
+  }
 
   const doneTask = async (id) => {
     try {
@@ -108,19 +110,19 @@ const Tasks = () => {
             </div>
           </div>
           <div className="flex gap-x-8">
-            <div onClick={trash} className="capitalize rounded-full p-2 text-red-500 text-sm bg-[#BB86FC] dark:text-white">
+            <div onClick={trash} onMouseLeave={() => { document.getElementById("trash").style.opacity = "0" }} onMouseEnter={() => { document.getElementById("trash").style.opacity = "1" }} className="flex justify-center relative capitalize rounded-full p-2 text-red-500 text-sm bg-[#BB86FC] dark:text-white" >
+              <span id="trash" className="absolute -top-12 opacity-0 duration-300 bg-slate-700 p-2 rounded-md text-white">trash</span>
               <FaTrash size={22} />
             </div>
-            <div onClick={reset} className="capitalize rounded-full p-2 text-black text-sm bg-[#BB86FC] dark:text-white">
+            <div onClick={reset} onMouseLeave={() => { document.getElementById("reset").style.opacity = "0" }} onMouseEnter={() => { document.getElementById("reset").style.opacity = "1" }} className="flex justify-center relative capitalize rounded-full p-2 text-black text-sm bg-[#BB86FC] dark:text-white">
+              <span id="reset" className="absolute -top-12 opacity-0 duration-300 bg-slate-700 p-2 rounded-md text-white">reset</span>
               <RxReset size={22} />
             </div>
           </div>
         </div>
         <div className="grid gap-y-8 justify-center mt-20">
           {!loading && tasks ? tasks.map(task =>
-            <Link to={`/task/${task._id}`} key={task._id}>
-              <TaskCards id={task._id} doneTask={() => doneTask(task._id)} softDelete={() => softDelete(task._id)} key={task._id} title={task.title} priority={task.priority} status={task.status} />
-            </Link>
+            <TaskCards showTask={() => showTask(task._id)} id={task._id} doneTask={() => doneTask(task._id)} softDelete={() => softDelete(task._id)} key={task._id} title={task.title} priority={task.priority} status={task.status} />
           ) : <img src={loader} alt="" />}
         </div>
 
